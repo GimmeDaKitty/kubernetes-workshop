@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: translations
+  labels:
+    app: translations
+spec:
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      app: translations
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: translations
+    spec:
+      containers:
+        - name: translations-service
+          image: local-translations-service:1.0.0
+          ports:
+            - containerPort: 5000
+              name: translations

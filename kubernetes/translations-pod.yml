@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: translations
+  labels:
+    app: translations
+spec:
+  containers:
+  - name: translations
+    image: local-translations-service:1.0.0
+    ports:
+    - containerPort: 5000

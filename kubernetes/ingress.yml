@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: test-ingress
+  namespace: demo
+  annotations:
+    # kubernetes.io/ingress.class: test-ingress # OUTDATED ANNOTATION. SEE ingressClassName BELOW
+    kubernetes.io/ingress.provider: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /$1 # NEEDED TO REMOVE ONLY THE PARTS OF PATH WE NEED
+spec:
+  ingressClassName: test-ingress # NECESSARY TO BIND CONFIGURATION TO INGRESS CONTROLLER
+  rules:
+  - host: 127.0.0.1
+    http:
+      paths:
+      - pathType: ImplementationSpecific
+        path: /process-configuration/?(.*)
+        backend:
+          service:
+            name: process-configuration
+            port:
+              number: 80
+      - pathType: ImplementationSpecific
+        path: /translations/?(.*)
+        backend:
+          service:
+            name: translations
+            port:
+              number: 80

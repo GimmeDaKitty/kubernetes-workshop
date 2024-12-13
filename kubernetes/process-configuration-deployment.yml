@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: process-configuration
+  labels:
+    app: process-configuration
+spec:
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      app: process-configuration
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: process-configuration
+    spec:
+      containers:
+        - name: process-configuration-service
+          image: local-process-configuration:1.0.0
+          ports:
+            - containerPort: 5000
+              name: processconfig
